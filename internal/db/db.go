@@ -6,12 +6,13 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"net/url"
 
 	"github.com/lera/react_it-15/config"
 
-	// godror registers itself as the "oracle" driver for database/sql.
-	// The blank import is intentional — only the side-effect is needed.
-	_ "github.com/godror/godror"
+	// go-ora is a pure-Go Oracle driver — no Oracle Instant Client required.
+	// The blank import registers it as the "oracle" driver for database/sql.
+	_ "github.com/sijms/go-ora/v2"
 )
 
 // Pool is the application-wide, concurrency-safe database connection pool.
@@ -21,12 +22,12 @@ var Pool *sql.DB
 // Connect opens (and validates) a connection to the Oracle DB described in cfg.
 // It should be called exactly once during application startup.
 func Connect(cfg *config.Config) error {
-	// godror connection string format:
-	//   user="…" password="…" connectString="host:port/service"
+	// go-ora DSN format:
+	//   oracle://user:password@host:port/service
 	dsn := fmt.Sprintf(
-		`user="%s" password="%s" connectString="%s:%s/%s"`,
-		cfg.DBUser,
-		cfg.DBPassword,
+		"oracle://%s:%s@%s:%s/%s",
+		url.PathEscape(cfg.DBUser),
+		url.PathEscape(cfg.DBPassword),
 		cfg.DBHost,
 		cfg.DBPort,
 		cfg.DBService,
