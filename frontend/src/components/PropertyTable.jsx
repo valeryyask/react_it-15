@@ -7,6 +7,7 @@ export default function PropertyTable() {
     sortConfig,
     toggleSort,
     setSelectedProperty,
+    setEditingProperty,
     deleteProperty
   } = useProperties();
 
@@ -138,6 +139,13 @@ export default function PropertyTable() {
                           className="px-2.5 py-1 text-xs font-medium border border-gray-300 rounded-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
                         >
                           Просмотр
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setEditingProperty(prop)}
+                          className="px-2.5 py-1 text-xs font-medium border border-blue-200 rounded-sm text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer"
+                        >
+                          Изменить
                         </button>
                         <button
                           type="button"

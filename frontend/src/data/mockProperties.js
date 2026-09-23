@@ -1,63 +1,9 @@
 /**
- * Простые моковые данные для агентства недвижимости (USD, русский язык).
+ * Модуль управления данными недвижимости на основе JSON и localStorage.
  */
+import initialPropertiesData from './properties.json';
 
-export const INITIAL_PROPERTIES = [
-  {
-    id: 'prop-1',
-    title: 'Квартира в Москве',
-    type: 'Квартира',
-    location: 'Москва, Пресненский р-н',
-    area: 65,
-    price: 180000,
-    imageUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'prop-2',
-    title: 'Загородный дом',
-    type: 'Дом',
-    location: 'Московская обл., Истра',
-    area: 180,
-    price: 250000,
-    imageUrl: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'prop-3',
-    title: 'Офис в центре',
-    type: 'Коммерческая',
-    location: 'Санкт-Петербург, Центральный р-н',
-    area: 95,
-    price: 140000,
-    imageUrl: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'prop-4',
-    title: 'Студия у моря',
-    type: 'Апартаменты',
-    location: 'Сочи, Адлер',
-    area: 38,
-    price: 95000,
-    imageUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'prop-5',
-    title: 'Коттедж с участком',
-    type: 'Дом',
-    location: 'Ленинградская обл., Выборг',
-    area: 140,
-    price: 190000,
-    imageUrl: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'prop-6',
-    title: 'Пентхаус с террасой',
-    type: 'Пентхаус',
-    location: 'Москва, Хамовники',
-    area: 160,
-    price: 420000,
-    imageUrl: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80'
-  }
-];
+export const INITIAL_PROPERTIES = initialPropertiesData;
 
 const STORAGE_KEY = 'real_estate_properties_v2';
 

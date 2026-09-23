@@ -4,6 +4,7 @@ import PropertyTable from '../components/PropertyTable';
 import PropertyCard from '../components/PropertyCard';
 import PropertyDetailModal from '../components/PropertyDetailModal';
 import AddPropertyModal from '../components/AddPropertyModal';
+import EditPropertyModal from '../components/EditPropertyModal';
 import { useProperties } from '../context/PropertyContext';
 
 export default function DashboardPage() {
@@ -150,6 +151,7 @@ export default function DashboardPage() {
       {/* Модальные окна */}
       <PropertyDetailModal />
       <AddPropertyModal />
+      <EditPropertyModal />
     </div>
   );
 }

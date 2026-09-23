@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useProperties } from '../context/PropertyContext';
 
 export default function PropertyDetailModal() {
-  const { selectedProperty, setSelectedProperty } = useProperties();
+  const { selectedProperty, setSelectedProperty, setEditingProperty } = useProperties();
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -73,8 +73,19 @@ export default function PropertyDetailModal() {
           </div>
         </div>
 
-        {/* Кнопка закрытия */}
-        <div className="px-5 py-3 bg-gray-50 border-t border-gray-200 flex justify-end">
+        {/* Кнопки действий */}
+        <div className="px-5 py-3 bg-gray-50 border-t border-gray-200 flex justify-end gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              const current = selectedProperty;
+              setSelectedProperty(null);
+              setEditingProperty(current);
+            }}
+            className="px-4 py-2 text-xs font-medium uppercase tracking-wider bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer"
+          >
+            Редактировать
+          </button>
           <button
             type="button"
             onClick={() => setSelectedProperty(null)}

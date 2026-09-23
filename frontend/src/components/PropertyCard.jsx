@@ -1,7 +1,7 @@
 import { useProperties } from '../context/PropertyContext';
 
 export default function PropertyCard({ property }) {
-  const { setSelectedProperty, deleteProperty } = useProperties();
+  const { setSelectedProperty, setEditingProperty, deleteProperty } = useProperties();
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-xs overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
@@ -41,7 +41,7 @@ export default function PropertyCard({ property }) {
           ${property.price.toLocaleString('en-US')}
         </span>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <button
             type="button"
             onClick={() => setSelectedProperty(property)}
@@ -51,12 +51,20 @@ export default function PropertyCard({ property }) {
           </button>
           <button
             type="button"
+            onClick={() => setEditingProperty(property)}
+            className="px-2.5 py-1 text-xs font-medium border border-blue-200 rounded-sm text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer"
+          >
+            Изменить
+          </button>
+          <button
+            type="button"
             onClick={() => {
               if (window.confirm(`Удалить объект "${property.title}"?`)) {
                 deleteProperty(property.id);
               }
             }}
             className="px-2 py-1 text-xs font-medium border border-red-200 rounded-sm text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+            title="Удалить"
           >
             ✕
           </button>

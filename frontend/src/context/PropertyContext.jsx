@@ -13,6 +13,7 @@ export function PropertyProvider({ children }) {
   const [filterType, setFilterType] = useState('Все');
   const [sortConfig, setSortConfig] = useState({ field: null, direction: 'asc' });
   const [selectedProperty, setSelectedProperty] = useState(null);
+  const [editingProperty, setEditingProperty] = useState(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const handleAddProperty = (propertyData) => {
@@ -37,12 +38,43 @@ export function PropertyProvider({ children }) {
     return newProperty;
   };
 
+  const handleUpdateProperty = (id, updatedData) => {
+    const rawPrice = Number(updatedData.price) || 0;
+    const rawArea = Number(updatedData.area) || 0;
+
+    const updated = properties.map((p) => {
+      if (p.id === id) {
+        return {
+          ...p,
+          title: updatedData.title.trim(),
+          type: updatedData.type || p.type,
+          location: updatedData.location.trim(),
+          area: rawArea,
+          price: rawPrice,
+          imageUrl: updatedData.imageUrl?.trim() || p.imageUrl
+        };
+      }
+      return p;
+    });
+
+    setProperties(updated);
+    saveProperties(updated);
+
+    if (selectedProperty && selectedProperty.id === id) {
+      setSelectedProperty(updated.find((p) => p.id === id));
+    }
+    setEditingProperty(null);
+  };
+
   const handleDeleteProperty = (id) => {
     const updated = properties.filter((p) => p.id !== id);
     setProperties(updated);
     saveProperties(updated);
     if (selectedProperty && selectedProperty.id === id) {
       setSelectedProperty(null);
+    }
+    if (editingProperty && editingProperty.id === id) {
+      setEditingProperty(null);
     }
   };
 
@@ -53,6 +85,7 @@ export function PropertyProvider({ children }) {
     setFilterType('Все');
     setSortConfig({ field: null, direction: 'asc' });
     setSelectedProperty(null);
+    setEditingProperty(null);
   };
 
   const toggleSort = (field) => {
@@ -120,9 +153,12 @@ export function PropertyProvider({ children }) {
         toggleSort,
         selectedProperty,
         setSelectedProperty,
+        editingProperty,
+        setEditingProperty,
         isAddModalOpen,
         setIsAddModalOpen,
         addProperty: handleAddProperty,
+        updateProperty: handleUpdateProperty,
         deleteProperty: handleDeleteProperty,
         resetDefaults: handleResetDefaults
       }}
