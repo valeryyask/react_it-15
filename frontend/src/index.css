@@ -1,19 +1,412 @@
-@import "tailwindcss";
+/* src/index.css — ГЛОБАЛЬНЫЕ СТИЛИ приложения.
+   Цвета вынесены в переменные (--text, --accent и т.д.): светлая и тёмная тема
+   переключаются автоматически по настройке системы (prefers-color-scheme). */
 
-*, *::before, *::after {
+:root {
+  --text: #4b5563;
+  --text-h: #111827;
+  --bg: #ffffff;
+  --bg-soft: #f9fafb;
+  --border: #e5e7eb;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-bg: rgba(37, 99, 235, 0.08);
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --danger-border: #fecaca;
+  --shadow:
+    rgba(0, 0, 0, 0.08) 0 10px 15px -3px, rgba(0, 0, 0, 0.04) 0 4px 6px -2px;
+
+  --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  font: 16px/150% var(--sans);
+  letter-spacing: 0.15px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #111827;
+    --bg-soft: #1f2937;
+    --border: #374151;
+    --accent: #3b82f6;
+    --accent-hover: #60a5fa;
+    --accent-bg: rgba(59, 130, 246, 0.15);
+    --danger: #ef4444;
+    --danger-bg: rgba(220, 38, 38, 0.15);
+    --danger-border: rgba(239, 68, 68, 0.4);
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+}
+
+* {
   box-sizing: border-box;
 }
 
-html, body {
+body {
   margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f9fafb;
-  color: #111827;
-  -webkit-font-smoothing: antialiased;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
-img {
-  display: block;
-  max-width: 100%;
+/* Контейнер приложения: колонка по центру экрана */
+#root {
+  max-width: 1040px;
+  margin: 0 auto;
+  min-height: 100svh;
+  border-inline: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--text-h);
+  margin: 0 0 16px;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Навигация ---------- */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+
+.nav-brand {
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--text-h);
+}
+
+.nav-brand:hover {
+  text-decoration: none;
+}
+
+.nav-spacer {
+  flex: 1; /* раздвигает меню: слева ссылки, справа пользователь */
+}
+
+/* Ссылка текущей страницы */
+.nav a.active {
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.nav-user {
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+/* ---------- Основная область ---------- */
+.content {
+  flex: 1;
+  padding: 32px 24px;
+}
+
+.page {
+  text-align: left;
+}
+
+/* Карточка с формой (вход / регистрация) */
+.card {
+  max-width: 400px;
+  margin: 32px auto;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-soft);
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+/* ---------- Поля ввода ---------- */
+input {
+  width: 100%;
+  padding: 8px 12px;
+  font: inherit;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.15s, outline 0.15s;
+}
+
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ---------- Кнопки ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.btn-primary {
+  color: #fff;
+  background: var(--accent);
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn-danger {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+}
+
+.btn-danger:hover {
+  border-color: var(--danger);
+}
+
+.btn-outline {
+  color: var(--text-h);
+  background: transparent;
+  border-color: var(--border);
+}
+
+.btn-outline:hover {
+  border-color: var(--accent);
+}
+
+/* ---------- Таблица ---------- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.table th,
+.table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.table th {
+  color: var(--text-h);
+  font-weight: 600;
+  background: var(--bg-soft);
+}
+
+.table tbody tr:hover {
+  background: var(--accent-bg);
+}
+
+.table .add-row:hover {
+  background: transparent;
+}
+
+/* ---------- Блок ошибки ---------- */
+.error {
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  border-radius: 8px;
+}
+
+/* ---------- Окно загрузки (спиннер) ---------- */
+.overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--text-h);
+  background: color-mix(in srgb, var(--bg) 75%, transparent);
+  backdrop-filter: blur(2px);
+}
+
+.overlay-fixed {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+.overlay-local {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  border-radius: 12px;
+}
+
+.loading-block {
+  position: relative;
+  min-height: 160px;
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid var(--accent-bg);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.spinner-small {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner,
+  .spinner-small {
+    animation-duration: 3s;
+  }
+}
+
+/* ---------- Сводка (StatsBar) ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat {
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-soft);
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text);
+  margin-top: 4px;
+}
+
+/* ---------- Универсальная форма (EntityForm) ---------- */
+.entity-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 20px;
+}
+
+/* ---------- Таблица на TanStack Table ---------- */
+.toolbar {
+  margin-bottom: 12px;
+  max-width: 340px;
+}
+
+.table th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.table td.empty {
+  text-align: center;
+  padding: 24px;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.pagination span {
+  margin: 0 8px;
+  font-size: 14px;
+}
+
+.pagination select {
+  margin-left: auto;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
